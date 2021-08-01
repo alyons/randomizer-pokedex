@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 
 import typeEffectiveness from '../assets/data/gen2TypeEffectiveness';
+import TypeIcon from './TypeIcon';
 
 function multiplyMap(typeMap, key, factor) {
   typeMap.set(key, typeMap.get(key) * factor)
@@ -45,7 +46,7 @@ const DamageTaken = props => {
           <TableRow>
             {typeList.map((t) => (
               <TableCell key={t}>
-                <img src={`${window.location.origin}/assets/types/${t}.gif`} alt={t} style={imgStyle} />
+                <TypeIcon {...{ type: t, sizing: 'damage-area' }} />
               </TableCell>
             ))}
           </TableRow>

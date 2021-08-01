@@ -16,6 +16,7 @@ import {
 import pokedexData from '../assets/data/randomizer_30072021.json';
 import DamageTaken from '../components/DamageTaken';
 import Abilities from '../components/Abilities';
+import Information from '../components/Information';
 
 const PokemonData = props => {
 
@@ -68,25 +69,22 @@ const PokemonData = props => {
 
   console.log(pokemonData);
 
+  let imageStyle = {
+    width: '100%',
+    height: 'auto'
+  }
+
   return (
     <Grid container>
       <Grid item xs={4}>
-        <img src={`${window.location.origin}/assets/pokemon/${dexNumber}.png`} />
+        <img src={`${window.location.origin}/assets/pokemon/${dexNumber}.png`} style={imageStyle} />
       </Grid>
       <Grid item xs={4}>
-        <Typography>{pokemonData.name}</Typography>
-        <Typography>{pokemonData.number}</Typography>
-        <>
-          <img src={`${window.location.origin}/assets/types/${pokemonData.type1.toLocaleLowerCase()}.gif`} alt={pokemonData.type1} />
-          {(!!pokemonData.type2) ? <img src={`${window.location.origin}/assets/types/${pokemonData.type2.toLocaleLowerCase()}.gif`} alt={pokemonData.type2} /> : <div /> }
-        </>
+        <Information {...pokemonData} />
       </Grid>
       <Grid item xs={4}>
         <Typography variant="h4">Stats</Typography>
         <Radar data={data} options={options} />
-      </Grid>
-      <Grid item xs={12}>
-        <Abilities {...{ ability1: pokemonData.ability1, ability2: pokemonData.ability2, ability3: pokemonData.ability3 }}/>
       </Grid>
       <Grid item xs={12}>
         <DamageTaken {...{ type1: pokemonData.type1, type2: pokemonData.type2 }} />
