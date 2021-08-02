@@ -68,7 +68,7 @@ const PokemonData = props => {
     }
   };
 
-  console.log(pokemonData);
+  // console.log(pokemonData);
 
   let imageStyle = {
     width: '100%',

@@ -23,7 +23,6 @@ const MoveList = props => {
   useEffect(() => {
     fetch(uri).then(
       res => res.json().then(value => {
-        console.log(value);
         setMoves(value);
       })
     )

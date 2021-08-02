@@ -7,10 +7,10 @@ const router = express.Router();
 router.get('/test', (req, res) => {
   P.resource(['/api/v2/ability/technician', '/api/v2/ability/overgrow', '/api/v2/ability/unaware'])
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       res.sendStatus(200);
     }).catch((err) => {
-      console.error(err);
+      // console.error(err);
       res.sendStatus(500);
     });
 });
