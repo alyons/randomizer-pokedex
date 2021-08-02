@@ -1,0 +1,40 @@
+name: Live Channel Deploy
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
+jobs:
+  build-and-push-to-gcr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Build/Push Container to GCR
+        uses: RafikFarhad/push-to-gcr-github-action@v3.0.2
+        with:
+          gcloud_service_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
+          registry: gcr.io
+          project_id: extra-life-slalom
+          image_name: el-web-app
+          image_tag: live
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: el-web-app-live
+          image: gcr.io/extra-life-slalom/el-web-app:live
+          credentials: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
+      - name: Update firebase.json Service ID
+        run: echo "`jq '.hosting.rewrites[0].run.serviceId="el-web-app-live"' firebase.json`" > firebase.json
+      - name: read firebase.json
+        run: cat firebase.json
+      - name: Deploy to Live Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
+          projectId: extra-life-slalom
+          channelId: live
