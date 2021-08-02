@@ -4,16 +4,19 @@ import Pokedex from 'pokedex-promise-v2';
 const P = new Pokedex();
 const router = express.Router();
 
-router.get('/test', (req, res) => {
-  P.resource(['/api/v2/ability/technician', '/api/v2/ability/overgrow', '/api/v2/ability/unaware'])
-    .then((response) => {
-      // console.log(response);
-      res.sendStatus(200);
-    }).catch((err) => {
-      // console.error(err);
-      res.sendStatus(500);
-    });
-});
+function fixMoveNames (moveNames) {
+  let output = [];
+
+  moveNames.forEach((name) => {
+    switch(name) {
+      case 'poisonpowder': output.push('poison powder'); break;
+      case 'vicegrip': output.push('vise-grip'); break;
+      default: output.push(name); break;
+    }
+  });
+
+  return output;
+};
 
 router.get('/abilities', (req, res) => {
   let values = req.query.values;
@@ -37,6 +40,8 @@ router.get('/abilities', (req, res) => {
 router.get('/moves', (req, res) => {
   let values = req.query.values;
   let moves = values.split(',');
+  moves = fixMoveNames(moves);
+  console.log(moves);
   let apiCalls = moves.map((m) => (`/api/v2/move/${m.replace(' ', '-')}`));
 
   P.resource(apiCalls)
