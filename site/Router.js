@@ -8,7 +8,7 @@ const Router = props => {
   return (
     <Switch>
       <Route path='/pokemon/:dexNumber' component={PokemonData}/>
-      <Route path='*' component={Main} />
+      <Route exact path='*' component={Main} />
     </Switch>
   );
 };

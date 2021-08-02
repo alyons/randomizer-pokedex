@@ -17,6 +17,7 @@ import pokedexData from '../assets/data/randomizer_30072021.json';
 import DamageTaken from '../components/DamageTaken';
 import Abilities from '../components/Abilities';
 import Information from '../components/Information';
+import MoveList from '../components/MoveList';
 
 const PokemonData = props => {
 
@@ -90,25 +91,7 @@ const PokemonData = props => {
         <DamageTaken {...{ type1: pokemonData.type1, type2: pokemonData.type2 }} />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h4">Move Set</Typography>
-        <TableContainer component={Paper}>
-          <Table aria-label="Pokemon Move List">
-            <TableHead>
-              <TableRow>
-                <TableCell>Level</TableCell>
-                <TableCell>Attack Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pokemonData.moveSet.map((move, i) => (
-                <TableRow key={`move-${i}`}>
-                  <TableCell>{move.level}</TableCell>
-                  <TableCell>{move.name}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <MoveList {...pokemonData} />
       </Grid>
       
     </Grid>
