@@ -18,17 +18,17 @@ jobs:
         with:
           gcloud_service_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
           registry: gcr.io
-          project_id: extra-life-slalom
-          image_name: el-web-app
+          project_id: randomizer-pokedex
+          image_name: pokedex-app
           image_tag: live
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          service: el-web-app-live
-          image: gcr.io/extra-life-slalom/el-web-app:live
+          service: pokedex-app-live
+          image: gcr.io/randomizer-pokedex/pokedex-app:live
           credentials: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
       - name: Update firebase.json Service ID
-        run: echo "`jq '.hosting.rewrites[0].run.serviceId="el-web-app-live"' firebase.json`" > firebase.json
+        run: echo "`jq '.hosting.rewrites[0].run.serviceId="pokedex-app-live"' firebase.json`" > firebase.json
       - name: read firebase.json
         run: cat firebase.json
       - name: Deploy to Live Channel
@@ -36,5 +36,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RANDOMIZER_POKEDEX }}
-          projectId: extra-life-slalom
+          projectId: randomizer-pokedex
           channelId: live
